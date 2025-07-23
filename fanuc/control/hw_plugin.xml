@@ -1,0 +1,9 @@
+<library path="fanuc">
+  <class name="fanuc/HwFanuc"
+         type="fanuc::HwFanuc"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      Hardware plugin for fanuc.
+    </description>
+  </class>
+</library>
