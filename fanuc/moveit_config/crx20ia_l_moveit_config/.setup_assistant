@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: fanuc_description
+    relative_path: urdf/crx20ia_l/crx20ia_l.xacro
+  srdf:
+    relative_path: config/crx20ia_l.srdf
+  package_settings:
+    author_name: paolo franceschi
+    author_email: paolo.franceschi@supsi.ch
+    generated_timestamp: 1737636460

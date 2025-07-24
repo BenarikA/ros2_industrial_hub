@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>control_fanuc</name>
+  <name>control_fanuc_robot</name>
   <version>0.0.0</version>
   <description>Package description</description>
   <maintainer email="">Aleksandar Benarik</maintainer>
@@ -29,7 +29,7 @@
   <depend>geometry_msgs</depend>
   <depend>std_srvs</depend>
   <depend>std_msgs</depend>
-  <depend>fanuc_eth_ip</depend>
+  <depend>ethernet_ip</depend>
   <depend>fanuc_rmi</depend>
 
   <buildtool_depend>rosidl_default_generators</buildtool_depend>

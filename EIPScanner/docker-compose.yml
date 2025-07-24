@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  eip_scanner:
+    build: .
+    volumes:
+      - .:/code
+    command: examples/discovery_example
+    networks:
+      testing_net:
+        ipv4_address: 172.28.1.1
+    depends_on:
+      - opener_adapter
+
+  opener_adapter:
+    build: docker/opener
+    working_dir: /OpENer/bin/posix/src/ports/POSIX
+    command: ./OpENer eth0
+    ports:
+      - "44818:44818"
+    networks:
+      testing_net:
+        ipv4_address: 172.28.1.3
+
+  opener_adapter2:
+    build: docker/opener
+    working_dir: /OpENer/bin/posix/src/ports/POSIX
+    command: ./OpENer eth0
+    networks:
+      testing_net:
+        ipv4_address: 172.28.1.7
+
+  gdbserver:
+    build:
+      context: docker/gdbserver
+    security_opt: # options needed for gdb debugging
+      - seccomp:unconfined
+      - apparmor:unconfined
+    ports:
+      - "7776:22"
+      - "7777:7777"
+networks:
+  testing_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(fanuc_control)
+project(control_fanuc_robot)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -10,7 +10,7 @@ find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
 
-find_package(fanuc_eth_ip REQUIRED)
+find_package(ethernet_ip REQUIRED)
 find_package(fanuc_rmi REQUIRED)
 
 find_package(pluginlib REQUIRED)
@@ -34,12 +34,12 @@ set(HW_IF_INCLUDE_DEPENDS
   pluginlib
   rcpputils
   hardware_interface
-  fanuc_eth_ip
+  ethernet_ip
   fanuc_rmi
   Boost
 )
 
-add_library(fanuc SHARED  src/fanuc_hw.cpp)
+add_library(fanuc SHARED  src/hw_fanuc.cpp)
 
 target_compile_features(fanuc PUBLIC cxx_std_17)
 target_include_directories(fanuc PUBLIC
