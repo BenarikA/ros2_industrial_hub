@@ -54,6 +54,22 @@ def generate_launch_description():
 
     declared_arguments.append(
         DeclareLaunchArgument(
+            "read_only",
+            default_value="false",
+            description="if the robot is read only . ",
+        )
+    )
+
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "use_rmi",
+            default_value="false",
+            description="if the robot is read only . ",
+        )
+    )
+
+    declared_arguments.append(
+        DeclareLaunchArgument(
             "gz",
             default_value="false",
             description="If mock hardware, simulate using Gazebo ",
