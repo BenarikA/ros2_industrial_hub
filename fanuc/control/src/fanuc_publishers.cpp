@@ -1,5 +1,5 @@
-#include "fanuc/fanuc_publishers.hpp"
-#include "fanuc/HwFanuc.h"  // Includes definition for JointComms
+#include "fanuc_publishers.hpp"
+#include "hw_fanuc.h"  // Includes definition for JointComms
 
 /**
  * @brief Initialize all ROS publishers used for communicating with the Fanuc robot.

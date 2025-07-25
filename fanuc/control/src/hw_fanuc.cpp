@@ -21,7 +21,7 @@
 
 // Custom Fanuc-specific headers
 #include "hw_fanuc.h"
-#include "hw_fanuc_publishers.hpp"
+#include "fanuc_publishers.hpp"
 
 namespace fanuc
 {
