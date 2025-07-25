@@ -99,6 +99,7 @@ protected:
   std::vector<double> joint_position_command_; // Commanded joint positions to send
 private:
   rclcpp::Logger logger_ = rclcpp::get_logger("hw_fanuc"); // Logger instance for debug/info/error output
+  rclcpp::executors::SingleThreadedExecutor executor_;
   std::shared_ptr<JointComms> comms_;                       // Node handling all ROS publishers
   std::vector<std::string> joint_names_;                    // Names of robot joints, from URDF/config
   std::vector<double> joint_pos_;                           // Temporary storage for joint positions

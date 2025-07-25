@@ -89,19 +89,18 @@ namespace fanuc
         }
 
         // Set internal flags: not using RMI, not read-only — we want to send commands
-        read_only_ = false;
-        useRMI_ = false;
+        auto read_only_ = false;
+        auto useRMI_ = false;
 
         // Fetch and print robot IP from hardware parameters (warn if empty)
         RCLCPP_INFO_STREAM(logger_,"\n Using Ethernet/IP to control the robot.\n");
+
+        std::string robot_ip = info_.hardware_parameters["robot_ip"];
+        RCLCPP_INFO_STREAM(logger_,"\n\n IP : "<< robot_ip << "\n\n ");
+
         if (robot_ip.empty()) 
         {
             RCLCPP_WARN(logger_, "\n\nNo robot_ip provided in hardware parameters!\n\n");
-        }
-        else
-        {
-            std::string robot_ip = info_.hardware_parameters["robot_ip"];
-            RCLCPP_INFO_STREAM(logger_,"\n\n IP : "<< robot_ip << "\n\n ");
         }
 
         // Create and initialize the Ethernet/IP driver using the robot IP
@@ -205,7 +204,7 @@ namespace fanuc
         {
             joint_position_[j] = jp[j];
             joint_velocities_[j] = (jp[j] - joint_position_prev_[j]) / dt;
-            joint_position_prev_[j] = jp[j];
+           // joint_position_prev_[j] = jp[j];
 
             RCLCPP_DEBUG_STREAM(logger_, "Joint " << j << ": " << jp[j]);
         }
