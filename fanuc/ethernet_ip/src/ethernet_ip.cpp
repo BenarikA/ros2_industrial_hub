@@ -51,8 +51,8 @@ std::vector<double> ethernet_ip::get_current_joint_pos()
   std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
   // Extract raw binary data from the response (each joint value is 4 bytes = float)
-  std::vector<uint8_t> data = response.getData();
-  int numFloats = data.size() / 4;
+  std::vector<uint8_t> myList = response.getData();
+  int numArrays = myList.size() / 4;
 
   std::vector<float> full;  // Temporary container for float joint values
 
@@ -71,7 +71,7 @@ std::vector<double> ethernet_ip::get_current_joint_pos()
   // Extract joint angles from the response
     // Skip the first value (index 0), which is usually a status or timestamp
     // Extract the next 6 values (indices 1 through 6) for the 6 robot joints
-    std::vector<double> j_val(raw.begin() + 1, raw.begin() + 7);
+    std::vector<double> j_val(full.begin() + 1, full.begin() + 7);
 
     // Convert joint angles from degrees to radians
     // This is standard practice for consistency with ROS and most robotics frameworks
@@ -81,7 +81,7 @@ std::vector<double> ethernet_ip::get_current_joint_pos()
     // Fanuc-specific adjustment:
     // Joint 3 is mechanically coupled with Joint 2 on many Fanuc arms,
     // so we add Joint 2's value to Joint 3 to get the correct kinematic position.
-    j_val.at(2) += j_val.[1];
+    j_val.at(2) += j_val[1];
 
     // Return the final joint values (in radians) as a 6-element vector
     return j_val;
@@ -99,8 +99,8 @@ std::vector<double> ethernet_ip::get_current_pose()
   std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
   // Extract raw byte buffer
-  std::vector<uint8_t> data = response.getData();
-  int numFloats = data.size() / 4;
+  std::vector<uint8_t> myList = response.getData();
+  int numArrays = myList.size() / 4;
   std::vector<float> full;
 
    // Convert byte data into float values (each float = 4 bytes)
@@ -177,7 +177,7 @@ void ethernet_ip::write_register(const int val, const int reg)
 void ethernet_ip::write_pos_register(std::vector<double> j_vals, const int reg)
 {
   // Convert from radians to degrees
-  ffor (int i=0;i<j_vals.size();i++)
+  for (int i=0;i<j_vals.size();i++)
     j_vals.at(i) *= 180.0/M_PI;
 
   // Fanuc-specific joint 3 compensation: reverse the offset from joint 2
