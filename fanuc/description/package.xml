@@ -3,9 +3,9 @@
 <package format="3">
   <name>fanuc_description</name>
   <version>0.0.0</version>
-  <description></description>
-  <maintainer email="">Aleksandar Benarik</maintainer>
-  <license></license>
+  <description>Package description</description>
+  <maintainer email="123@mail.com">Aleksandar Benarik</maintainer>
+  <license>bsd</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
