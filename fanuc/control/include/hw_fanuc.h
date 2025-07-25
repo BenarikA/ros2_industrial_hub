@@ -2,20 +2,14 @@
 
 #include <string>
 #include <vector>
-#include <memory>
+
 
 // Standard and ROS2 includes for node handling, messaging, and hardware interfaces
-#include "rclcpp/rclcpp.hpp"
 #include <rclcpp/logger.hpp>
 #include <rclcpp/node.hpp>
 #include <rclcpp/executors.hpp>
 
 #include "sensor_msgs/msg/joint_state.hpp"
-
-#include "geometry_msgs/msg/pose_stamped.hpp"
-#include "std_msgs/msg/string.hpp"
-#include "diagnostic_msgs/msg/diagnostic_array.hpp"
-#include "trajectory_msgs/msg/joint_trajectory.hpp"
 
 #include "hardware_interface/handle.hpp"
 #include "hardware_interface/hardware_info.hpp"
@@ -45,29 +39,10 @@ namespace fanuc
   public:
     JointComms();
 
-    // Publishes combined joint states for RViz or other visualizers
-    rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr joint_state_pub_;
-
     // Separate publishers for joint command and feedback data (position, velocity, torque)
     rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr command_position_joint;
     rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr feedback_position_joint;
-    rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr command_velocity_joint;
-    rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr feedback_velocity_joint;
-    rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr feedback_torque_joint;
-
-    // Publishers for Cartesian end-effector pose commands and feedback
-    rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr command_position_cartesian;
-    rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr feedback_position_cartesian;
-
-    // Publishers for robot state and diagnostic messages for monitoring purposes
-    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr robot_state;
-    rclcpp::Publisher<diagnostic_msgs::msg::DiagnosticArray>::SharedPtr robot_diagnostics;
-
-    // Publisher for tool (end-effector) pose in space
-    rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr tool_position;
-
-    // Publisher for full joint trajectory commands (for smooth motion execution)
-    rclcpp::Publisher<trajectory_msgs::msg::JointTrajectory>::SharedPtr command_trajectory;
+    rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr feedback_position_cartesian;
 };
 
 // Main hardware interface class implementing ROS2 control SystemInterface for the Fanuc robot
@@ -76,8 +51,10 @@ class HARDWARE_INTERFACE_PUBLIC HwFanuc : public hardware_interface::SystemInter
 public:
   // Lifecycle initialization: parse hardware info, set up communication, etc.
   CallbackReturn on_init(const hardware_interface::HardwareInfo & info) override;
+
   // Export the robot's state interfaces (position, velocity) to the controller manager
   std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
+
   // Export command interfaces (desired positions) for external controllers
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
@@ -104,8 +81,30 @@ private:
   std::shared_ptr<JointComms> comms_;                       // Node handling all ROS publishers
   std::vector<std::string> joint_names_;                    // Names of robot joints, from URDF/config
   std::vector<double> joint_pos_;                           // Temporary storage for joint positions
-  std::vector<double> joint_effort_;                           // Temporary storage for joint positions
   std::shared_ptr<ethernet_ip> EIP_driver_;               // Ethernet/IP driver interface to robot hardware
+
+  rmi::RMIDriver rmi_driver_;
+
+  bool useRMI_;
+
+  bool read_only_;
+
+  template <typename HandleType>
+  bool get_interface(
+    const std::string & name, const std::vector<std::string> & interface_list,
+    const std::string & interface_name, const size_t vector_index,
+    std::vector<std::vector<double>> & values, std::vector<HandleType> & interfaces);
+
+  void initialize_storage_vectors(
+    std::vector<std::vector<double>> & commands, std::vector<std::vector<double>> & states,
+    const std::vector<std::string> & interfaces,
+    const std::vector<hardware_interface::ComponentInfo> & component_infos);
+
+  template <typename InterfaceType>
+  bool populate_interfaces(
+    const std::vector<hardware_interface::ComponentInfo> & components,
+    std::vector<std::string> & interfaces, std::vector<std::vector<double>> & storage,
+    std::vector<InterfaceType> & target_interfaces, bool using_state_interfaces);
 };
 
 // Alias for convenience if needed

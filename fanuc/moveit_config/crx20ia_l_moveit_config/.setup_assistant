@@ -5,6 +5,6 @@ moveit_setup_assistant_config:
   srdf:
     relative_path: config/crx20ia_l.srdf
   package_settings:
-    author_name: paolo franceschi
-    author_email: paolo.franceschi@supsi.ch
+    author_name: Aleksandar Benarik
+    author_email: 123@mail.com
     generated_timestamp: 1737636460
