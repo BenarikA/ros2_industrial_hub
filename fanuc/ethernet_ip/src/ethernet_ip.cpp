@@ -255,7 +255,45 @@ bool ethernet_ip::writeDPM(const std::vector<int> vals)
 }
 
 // Converts floating-point values to scaled ints and writes DPM input
-bool ethernet_ip::writeDPMScaled(const std::vector<double> vals, const double scale)
+bool fanuc_eth_ip::writeDPMScaled(const std::vector<double> vals, const double scale)
 {
-  if (vals.size() != 6) {
-    Logger(Log
+  if(vals.size()!=6)
+  {
+    Logger(LogLevel::ERROR) << "expected vector of size 6! got: " << vals.size();
+    return false;
+  }
+
+  std::vector<int> v(6);
+  for (int i=0;i<vals.size();i++)
+    v.at(i)=vals.at(i)/scale;
+
+  writeDPM(v);
+
+  return true;
+}
+// Activate DPM
+void fanuc_eth_ip::activateDPM(const bool activate)
+{
+  setCurrentPos();
+  
+  if(activate)
+    write_register(StatusEnum::Dpm, RegisterEnum::MotionStatus );
+  else
+    write_register(StatusEnum::Ros, RegisterEnum::MotionStatus );
+
+  int act = (activate) ? 0 : 1;
+  Buffer buffer;
+  for(int i=0;i<6;i++)
+    buffer  << CipInt( 0 );
+  buffer  << CipInt( act );
+  write_DI(buffer);
+  write_register(act, RegisterEnum::DpmStatus);
+  
+    Logger(LogLevel::ERROR) << "\033[1;31m \n\n\n DPM activate: "<< act <<" \n\n\n\033[0m\n";
+
+}
+// Deactivate DPM
+void fanuc_eth_ip::deactivateDPM(){activateDPM(false);}
+
+void fanuc_eth_ip::setCurrentPos() {write_pos_register(get_current_joint_pos());}
+
