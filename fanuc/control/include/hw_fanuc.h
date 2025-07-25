@@ -95,6 +95,7 @@ protected:
 
   // Internal storage for joint states and commands
   std::vector<double> joint_position_; // Current joint positions (measured)
+  std::vector<double> joint_position_prev_; // Current joint positions (measured)
   std::vector<double> joint_velocities_; // Current joint velocities (measured)
   std::vector<double> joint_position_command_; // Commanded joint positions to send
 private:

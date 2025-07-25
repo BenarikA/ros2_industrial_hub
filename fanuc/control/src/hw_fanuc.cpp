@@ -112,6 +112,7 @@ namespace fanuc
         std::vector<double> init_joints(6, 0.0);
   
         joint_position_ = init_joints;
+        joint_position_prev_   init_joints;
         joint_velocities_ = init_joints;
         joint_position_command_ = init_joints;
 
@@ -204,7 +205,7 @@ namespace fanuc
         {
             joint_position_[j] = jp[j];
             joint_velocities_[j] = (jp[j] - joint_position_prev_[j]) / dt;
-           // joint_position_prev_[j] = jp[j];
+            joint_position_prev_[j] = jp[j];
 
             RCLCPP_DEBUG_STREAM(logger_, "Joint " << j << ": " << jp[j]);
         }
