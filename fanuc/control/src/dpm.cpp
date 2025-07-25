@@ -11,7 +11,7 @@ This example shows how to listen to a FT sensor and generate motion accordingly
 #include <sensor_msgs/msg/joint_state.hpp> 
 #include <geometry_msgs/msg/pose_stamped.hpp>
 
-#include <ethernet_ip/ethernet_ip.hpp>
+#include <ethernet_ip.hpp>
 
 #include <mutex> 
 

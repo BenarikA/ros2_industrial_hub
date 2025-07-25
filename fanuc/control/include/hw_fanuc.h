@@ -23,7 +23,7 @@
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 
-#include <ethernet_ip/ethernet_ip.hpp>
+#include <ethernet_ip.hpp>
 
 
 using hardware_interface::return_type;

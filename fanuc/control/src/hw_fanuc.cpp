@@ -20,7 +20,7 @@
 #include "rclcpp/rclcpp.hpp"
 
 // Custom Fanuc-specific headers
-#include "fanuc/hw_fanuc.h"
+#include "hw_fanuc.h"
 #include "hw_fanuc_publishers.hpp"
 
 namespace fanuc
