@@ -21,7 +21,7 @@ class DPMSubscriber : public rclcpp::Node
     
     DPMSubscriber();
     ~ DPMSubscriber();
-    std::shared_ptr<fanuc_eth_ip> EIP_driver_;
+    std::shared_ptr<ethernet_ip> EIP_driver_;
     rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr fb_publisher_;
     rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr cart_fb_publisher_;
     double rate_;
@@ -64,7 +64,7 @@ DPMSubscriber::DPMSubscriber(): Node("dpm_subscriber")
   fb_publisher_ = this->create_publisher<sensor_msgs::msg::JointState>("dpm_fb", 10);
   cart_fb_publisher_ = this->create_publisher<sensor_msgs::msg::JointState>("cart_dpm_fb", 10);
 
-  EIP_driver_.reset( new fanuc_eth_ip (robot_ip) );
+  EIP_driver_.reset( new ethernet_ip (robot_ip) );
   RCLCPP_INFO_STREAM(this->get_logger(),"Initialized EIP driver at ip: " << robot_ip );
 
 }
