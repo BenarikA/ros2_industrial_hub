@@ -128,7 +128,8 @@ def launch_setup(context, *args, **kwargs):
         ]
     )
 
-    robot_description = {"robot_description": robot_description_content}    
+    robot_description = {"robot_description": robot_description_content}   
+    
 
     # === CONTROLLERS CONFIGURATION PATH ===
     robot_controllers = PathJoinSubstitution(
@@ -192,6 +193,14 @@ def launch_setup(context, *args, **kwargs):
         PythonLaunchDescriptionSource([os.path.join(get_package_share_directory('fanuc_description'),'launch', 'gazebo.launch.py')]),
         launch_arguments={"headless" : gz_headless}.items(), 
         condition=IfCondition(gz))
+
+
+    print("robot_ip", robot_ip) 
+    print("robot_type", s_robot_type)
+    print("use_mock_hardware", use_mock_hardware) 
+    print("read_only", read_only)
+    print("gz", gz) 
+    print("use_rmi", use_rmi)
 
     # === LIST OF NODES TO LAUNCH ===
     nodes_to_start = [
