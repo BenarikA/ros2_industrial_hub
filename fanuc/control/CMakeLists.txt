@@ -50,6 +50,8 @@ $<INSTALL_INTERFACE:include/fanuc>
 ament_target_dependencies(
   fanuc 
   ${HW_IF_INCLUDE_DEPENDS}
+  diagnostic_msgs
+  trajectory_msgs
 )
 
 pluginlib_export_plugin_description_file(hardware_interface hw_plugin.xml)
