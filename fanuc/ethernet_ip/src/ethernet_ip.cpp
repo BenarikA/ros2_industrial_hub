@@ -255,7 +255,7 @@ bool ethernet_ip::writeDPM(const std::vector<int> vals)
 }
 
 // Converts floating-point values to scaled ints and writes DPM input
-bool fanuc_eth_ip::writeDPMScaled(const std::vector<double> vals, const double scale)
+bool ethernet_ip::writeDPMScaled(const std::vector<double> vals, const double scale)
 {
   if(vals.size()!=6)
   {
@@ -272,7 +272,7 @@ bool fanuc_eth_ip::writeDPMScaled(const std::vector<double> vals, const double s
   return true;
 }
 // Activate DPM
-void fanuc_eth_ip::activateDPM(const bool activate)
+void ethernet_ip::activateDPM(const bool activate)
 {
   setCurrentPos();
   
@@ -293,7 +293,7 @@ void fanuc_eth_ip::activateDPM(const bool activate)
 
 }
 // Deactivate DPM
-void fanuc_eth_ip::deactivateDPM(){activateDPM(false);}
+void ethernet_ip::deactivateDPM(){activateDPM(false);}
 
-void fanuc_eth_ip::setCurrentPos() {write_pos_register(get_current_joint_pos());}
+void ethernet_ip::setCurrentPos() {write_pos_register(get_current_joint_pos());}
 
