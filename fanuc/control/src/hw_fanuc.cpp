@@ -104,7 +104,7 @@ namespace fanuc
         }
         else
         {  
-            EIP_driver_.reset( new fanuc_eth_ip (robot_ip) );
+            EIP_driver_.reset( new ethernet_ip (robot_ip) );
             RCLCPP_INFO_STREAM(logger_,"Initialized EIP driver at ip: " << robot_ip );
         }
   
