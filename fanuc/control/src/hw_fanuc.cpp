@@ -241,7 +241,7 @@ namespace fanuc
             msg.name = joint_names_;
             msg.position = joint_position_;
             msg.velocity = joint_velocities_;
-            comms_->fb_pub_->publish(msg);
+            comms_->feedback_position_joint->publish(msg);
         }
         {
             auto msg = sensor_msgs::msg::JointState();
@@ -249,7 +249,7 @@ namespace fanuc
             std::vector<std::string> n = {"x","y","z","Rx","Ry","Rz"};
             msg.name = n;
             msg.position = cp;
-            comms_->cart_fb_pub_->publish(msg);
+            comms_->feedback_position_cartesian->publish(msg);
         }
 
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
@@ -293,7 +293,7 @@ namespace fanuc
         msg.header.stamp = comms_->get_clock()->now();
         msg.name = joint_names_;
         msg.position = joint_position_command_;
-        comms_->cmd_pub_->publish(msg);
+        comms_->command_position_joint->publish(msg);
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
         RCLCPP_DEBUG_STREAM(logger_,"WRITE time:  = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[microseconds]" );
 
