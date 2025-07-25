@@ -21,14 +21,50 @@
 
 // Custom Fanuc-specific headers
 #include "hw_fanuc.h"
-#include "fanuc_publishers.hpp"
+//#include "fanuc_publishers.hpp"
 
 namespace fanuc
 {
     // Constructor for the communication node handling publishers
     JointComms::JointComms() : Node("hw_fanuc")
     {
-        HwFanucPublishers::init(this, this); // Initialize publishers
+        //HwFanucPublishers::init(this, this); // Initialize publishers
+
+        /// Publisher for standard joint states (positions, velocities, efforts)
+        // Typically used by RViz and other visualization/debugging tools.
+        joint_state_pub_ = this->create_publisher<sensor_msgs::msg::JointState>("/joint_states", 10);
+        
+        // Publishers for joint command and feedback:
+        // - command_position_joint: publishes desired joint positions to control the robot.
+        // - feedback_position_joint: publishes actual joint positions read from the robot.
+        // - command_velocity_joint: publishes desired joint velocities for velocity control.
+        // - feedback_velocity_joint: publishes measured joint velocities.
+        // - feedback_torque_joint: publishes torque/effort feedback per joint.
+        command_position_joint = this->create_publisher<sensor_msgs::msg::JointState>("/command_position_joint", 10);
+        feedback_position_joint = this->create_publisher<sensor_msgs::msg::JointState>("/feedback_position_joint",10);
+        command_velocity_joint = this->create_publisher<sensor_msgs::msg::JointState>("/command_velocity_joint", 10);
+        feedback_velocity_joint = this->create_publisher<sensor_msgs::msg::JointState>("/feedback_velocity_joint", 10);
+        feedback_torque_joint = this->create_publisher<sensor_msgs::msg::JointState>("/feedback_torque_joint", 10);
+        
+        // Publishers for Cartesian space commands and feedback:
+        // - command_position_cartesian: desired end-effector pose commands (position + orientation).
+        // - feedback_position_cartesian: actual end-effector pose from the robot for monitoring.
+        command_position_cartesian = this->create_publisher<geometry_msgs::msg::PoseStamped>("/command_position_cartesian", 10);
+        feedback_position_cartesian = this->create_publisher<geometry_msgs::msg::PoseStamped>("/feedback_position_cartesian",10);
+
+        // Publishers for robot-wide state and diagnostics information:
+        // - robot_state: publishes simple string state info (e.g., "idle", "moving", "error").
+        // - robot_diagnostics: publishes detailed diagnostic messages for health monitoring.
+        robot_state = this->create_publisher<std_msgs::msg::String>("/robot_state", 10);
+        robot_diagnostics = this->create_publisher<diagnostic_msgs::msg::DiagnosticArray>("/robot_diagnostics", 10);
+
+        // Publisher for tool/end-effector pose:
+        // Useful to track current position and orientation of the tool in 3D space.
+        tool_position = this->create_publisher<geometry_msgs::msg::PoseStamped>("/tool_position", 10);
+
+        // Publisher for joint trajectory commands:
+        // Allows commanding smooth, multi-point joint trajectories for the robot.
+        command_trajectory = this->create_publisher<trajectory_msgs::msg::JointTrajectory>("/command_trajectory", 10);
     }
 
     // Utility function to safely parse a double from a string
