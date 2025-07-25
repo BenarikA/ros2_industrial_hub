@@ -18,7 +18,7 @@
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 
 #include <ethernet_ip.hpp>
-
+#include <fanuc_rmi/rmi_driver.h>
 
 using hardware_interface::return_type;
 
