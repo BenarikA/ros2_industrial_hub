@@ -57,7 +57,7 @@ std::vector<double> ethernet_ip::get_current_joint_pos()
   std::vector<float> full;  // Temporary container for float joint values
 
   // Convert each 4-byte block into a float using memcpy (avoids aliasing issues)
-  for (int j = 0; j < numFloats; ++j) 
+  for (int j = 0; j < numArrays; ++j) 
   {
     unsigned char byteArray[4];
     for (int i = 0; i < 4; ++i)
