@@ -241,7 +241,7 @@ namespace fanuc
     return_type HwFanuc::write(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
     {
         auto begin = std::chrono::steady_clock::now();
-
+        auto read_only_ = false;
         if (!read_only_)
         {
             if (EIP_driver_)
@@ -286,4 +286,5 @@ namespace fanuc
 }
 
 // Register the hardware plugin with ROS 2 pluginlib
+#include "pluginlib/class_list_macros.hpp"
 PLUGINLIB_EXPORT_CLASS(fanuc::HwFanuc, hardware_interface::SystemInterface)

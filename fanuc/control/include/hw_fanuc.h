@@ -104,6 +104,7 @@ private:
   std::shared_ptr<JointComms> comms_;                       // Node handling all ROS publishers
   std::vector<std::string> joint_names_;                    // Names of robot joints, from URDF/config
   std::vector<double> joint_pos_;                           // Temporary storage for joint positions
+  std::vector<double> joint_effort_;                           // Temporary storage for joint positions
   std::shared_ptr<ethernet_ip> EIP_driver_;               // Ethernet/IP driver interface to robot hardware
 };
 
