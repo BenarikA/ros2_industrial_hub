@@ -130,7 +130,7 @@ def launch_setup(context, *args, **kwargs):
     # === CONTROLLERS CONFIGURATION PATH ===
     robot_controllers = PathJoinSubstitution(
         [
-            FindPackageShare("fanuc_control"),
+            FindPackageShare("control_fanuc_robot"),
             "config",
             controllers_file,
         ]
