@@ -11,6 +11,7 @@ find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
 
 find_package(ethernet_ip REQUIRED)
+find_package(fanuc_rmi REQUIRED)
 
 find_package(pluginlib REQUIRED)
 find_package(rcpputils REQUIRED)
@@ -36,6 +37,7 @@ set(HW_IF_INCLUDE_DEPENDS
   rcpputils
   hardware_interface
   ethernet_ip
+  fanuc_rmi
   Boost
 )
 
