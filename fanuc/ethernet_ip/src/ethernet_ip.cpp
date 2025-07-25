@@ -1,5 +1,6 @@
 
 #include <ethernet_ip.hpp>
+#include <vector>
 #include <iostream>
 #include <cassert>
 #include <math.h>
@@ -116,8 +117,9 @@ int ethernet_ip::read_register(const int& reg)
   auto response = messageRouter_->sendRequest(
       si_, ServiceCodes::GET_ATTRIBUTE_SINGLE, EPath(0x6B, 0x01, reg));
 
-  s// Extract raw bytes and interpret them as an integer
+  // Extract raw bytes and interpret them as an integer
   std::vector<uint8_t> data = response.getData();
+  //auto data = response->getData();  // or response.getData() depending on your wrapper
   int val;
   std::memcpy(&val, &data[0], sizeof(int));
 
@@ -196,7 +198,7 @@ bool ethernet_ip::write_DI(const Buffer buffer)
   return true;
 }
 
-/ Sends a boolean flag to a specific position over Ethernet/IP.
+// Sends a boolean flag to a specific position over Ethernet/IP.
 // Typically used to control tools like grippers or safety signals.
 //
 // Parameters:
