@@ -5,7 +5,7 @@
 #include "sensor_msgs/msg/joint_state.hpp"           // Joint state messages (positions, velocities, efforts)
 #include "geometry_msgs/msg/pose_stamped.hpp"        // Pose messages with timestamp (for Cartesian poses)
 #include "std_msgs/msg/string.hpp"                    // Standard string message type (e.g., robot state)
-//#include "diagnostic_msgs/msg/diagnostic_array.hpp"  // Diagnostic info array message type
+#include "diagnostic_msgs/msg/diagnostic_array.hpp"  // Diagnostic info array message type
 #include "trajectory_msgs/msg/joint_trajectory.hpp" // Joint trajectory messages for motion commands
 
 class JointComms;  // Forward declaration of JointComms class (defined elsewhere)

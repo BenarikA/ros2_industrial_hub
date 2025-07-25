@@ -14,7 +14,7 @@
 
 #include "geometry_msgs/msg/pose_stamped.hpp"
 #include "std_msgs/msg/string.hpp"
-//#include "diagnostic_msgs/msg/diagnostic_array.hpp"
+#include "diagnostic_msgs/msg/diagnostic_array.hpp"
 #include "trajectory_msgs/msg/joint_trajectory.hpp"
 
 #include "hardware_interface/handle.hpp"
