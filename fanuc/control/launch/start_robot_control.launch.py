@@ -1,12 +1,12 @@
 # === LAUNCH CORE ===
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, OpaqueFunction, SetParameter
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, OpaqueFunction
 from launch.substitutions import LaunchConfiguration, Command, PathJoinSubstitution, FindExecutable
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.conditions import IfCondition
 
 # === ROS 2 LAUNCH EXTENSIONS ===
-from launch_ros.actions import Node
+from launch_ros.actions import Node, SetParameter
 from launch_ros.substitutions import FindPackageShare
 
 # === UTILITIES ===
