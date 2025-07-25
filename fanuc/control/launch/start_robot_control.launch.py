@@ -22,7 +22,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "robot_type",
-            default_value="",
+            default_value="crx20ia_l",
             description="model of the fanuc robot. ",
         )
     )
@@ -98,6 +98,7 @@ def launch_setup(context, *args, **kwargs):
     robot_ip = LaunchConfiguration("robot_ip")
     controllers_file = LaunchConfiguration("controllers_file")
     read_only = LaunchConfiguration("read_only")
+    use_rmi = LaunchConfiguration("use_rmi")
     gz = LaunchConfiguration("gz")
     gz_headless = LaunchConfiguration("gz_headless")
 
@@ -111,17 +112,19 @@ def launch_setup(context, *args, **kwargs):
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
-            PathJoinSubstitution([FindPackageShare(description_package), "urdf", s_robot_type, f"{s_robot_type}.xacro"]),
+            PathJoinSubstitution([FindPackageShare(description_package), "urdf", s_robot_type, s_robot_type+".xacro"]),
             " ", 
             "robot_type:=", robot_type,
             " ", 
             "use_mock_hardware:=", use_mock_hardware,
             " ", 
             "robot_ip:=", robot_ip,
+            " ",  
+            "use_rmi:=", use_rmi,
             " ", 
             "read_only:=", read_only,
             " ", 
-            "gz:=", gz
+            "gz:=", gz,
         ]
     )
 
