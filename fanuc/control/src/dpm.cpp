@@ -4,14 +4,14 @@ This example shows how to listen to a FT sensor and generate motion accordingly
 */
 
 
-#include <ethernet_ip/ethernet_ip.hpp>
-
 #include <unistd.h>
 #include "rclcpp/rclcpp.hpp"
 #include <std_msgs/msg/int64_multi_array.hpp>
 #include <std_srvs/srv/set_bool.hpp> 
 #include <sensor_msgs/msg/joint_state.hpp> 
 #include <geometry_msgs/msg/pose_stamped.hpp>
+
+#include <ethernet_ip/ethernet_ip.hpp>
 
 #include <mutex> 
 

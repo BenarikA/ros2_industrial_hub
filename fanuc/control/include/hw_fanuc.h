@@ -23,7 +23,7 @@
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 
-#include <eth_ip_driver/eth_ip_driver.hpp>
+#include <ethernet_ip/ethernet_ip.hpp>
 
 
 using hardware_interface::return_type;
@@ -102,7 +102,7 @@ private:
   std::shared_ptr<JointComms> comms_;                       // Node handling all ROS publishers
   std::vector<std::string> joint_names_;                    // Names of robot joints, from URDF/config
   std::vector<double> joint_pos_;                           // Temporary storage for joint positions
-  std::shared_ptr<eth_ip_driver> EIP_driver_;               // Ethernet/IP driver interface to robot hardware
+  std::shared_ptr<ethernet_ip> EIP_driver_;               // Ethernet/IP driver interface to robot hardware
 };
 
 // Alias for convenience if needed
