@@ -112,7 +112,7 @@ namespace fanuc
         std::vector<double> init_joints(6, 0.0);
   
         joint_position_ = init_joints;
-        joint_position_prev_   init_joints;
+        joint_position_prev_  = init_joints;
         joint_velocities_ = init_joints;
         joint_position_command_ = init_joints;
 
@@ -226,7 +226,8 @@ namespace fanuc
             msg.header.stamp = comms_->get_clock()->now();
             msg.name = {"x", "y", "z", "Rx", "Ry", "Rz"};
             msg.position = cp;
-            comms_->feedback_position_cartesian->publish(msg);  // match your naming
+
+            comms_->feedback_position_joint->publish(msg);  // match your naming
         }
 
         // Log read duration
