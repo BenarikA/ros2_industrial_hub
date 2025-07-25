@@ -103,6 +103,13 @@ def launch_setup(context, *args, **kwargs):
     gz_headless = LaunchConfiguration("gz_headless")
 
     s_robot_type = robot_type.perform(context)
+    s_robot_ip = LaunchConfiguration("robot_ip").perform(context)
+    s_use_mock_hardware = LaunchConfiguration("use_mock_hardware").perform(context)
+    s_controllers_file = LaunchConfiguration("controllers_file").perform(context)
+    s_read_only = LaunchConfiguration("read_only").perform(context)
+    s_use_rmi = LaunchConfiguration("use_rmi").perform(context)
+    s_gz = LaunchConfiguration("gz").perform(context)
+    s_gz_headless = LaunchConfiguration("gz_headless").perform(context)
     
     # === Enable simulated clock if Gazebo is used ===
     set_use_sim_time = SetParameter(name='use_sim_time', value=LaunchConfiguration('gz'))
@@ -195,12 +202,12 @@ def launch_setup(context, *args, **kwargs):
         condition=IfCondition(gz))
 
 
-    print("robot_ip", robot_ip) 
+    print("robot_ip", s_robot_ip) 
     print("robot_type", s_robot_type)
-    print("use_mock_hardware", use_mock_hardware) 
-    print("read_only", read_only)
-    print("gz", gz) 
-    print("use_rmi", use_rmi)
+    print("use_mock_hardware", s_use_mock_hardware) 
+    print("read_only", s_read_only)
+    print("gz", s_gz) 
+    print("use_rmi", s_use_rmi)
 
     # === LIST OF NODES TO LAUNCH ===
     nodes_to_start = [
